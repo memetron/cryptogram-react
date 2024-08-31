@@ -38,6 +38,16 @@
 }
 
 .cipherLetter {
+  color: black;
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  margin: 0;
+  text-align: center;
+}
+
+.repeatedLetter {
+  color: red;
   width: 24px;
   height: 24px;
   font-size: 18px;

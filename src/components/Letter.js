@@ -12,6 +12,7 @@ const CryptogramLetter = forwardRef(({
                                      }, ref) => {
     const [focusType, setFocusType] = useState("unfocused");
     const [isActiveFocus, setIsActiveFocus] = useState(false);
+    const [isRepeated, setIsRepeated] = useState(false);
 
     const handleChange = (e) => {
         let guess = e.target.value.toUpperCase();
@@ -54,6 +55,20 @@ const CryptogramLetter = forwardRef(({
         }
     }, [focusedLetter, letter, isActiveFocus]);
 
+    useEffect(() => {
+        let count = 0;
+        Object.keys(guesses).forEach(key => {
+            if (guesses[letter] !== "" && guesses[key] === guesses[letter]) {
+                count += 1;
+            }
+        });
+        if (count > 1) {
+            setIsRepeated(true);
+        } else {
+            setIsRepeated(false);
+        }
+    }, [guesses]);
+
     return (
         <div className="letterBox">
             {letter.match("[a-zA-Z]") && (
@@ -69,7 +84,7 @@ const CryptogramLetter = forwardRef(({
                 />
             )}
             {letter.match("[a-zA-Z]") && (<hr className="letterDivider"/>)}
-            <p className="cipherLetter">{letter.toUpperCase()}</p>
+            <p className={isRepeated?"repeatedLetter":"cipherLetter"}>{letter.toUpperCase()}</p>
         </div>
     );
 });
