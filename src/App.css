@@ -14,14 +14,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #ffffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: black;
 }
 
 .App-link {
@@ -35,4 +35,51 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.cipherLetter {
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  margin: 0;
+  text-align: center;
+}
+
+.inputBox {
+  width: 20px;
+  height: 20px;
+  font-size: 18px;
+  margin: 0;
+  text-align: center;
+
+}
+
+.sentence {
+  display: flex;
+}
+.letterBox {
+  width: 26px;
+}
+.letterDivider {
+  margin: 0;
+
+}
+input {
+  all: unset;
+}
+
+.inputBox__input {
+  color: transparent;
+}
+
+.unfocused {
+  background: white;
+}
+
+.minor-focus {
+  background: aquamarine;
+}
+
+.major-focus {
+  background: aqua;
 }
