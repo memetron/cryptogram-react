@@ -60,6 +60,12 @@
 
 .sentence {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+
+  width: 75%;
+  height: auto;
 }
 .letterBox {
   width: 26px;
