@@ -54,6 +54,10 @@
 
 }
 
+.no-caret {
+  caret-color: transparent;
+}
+
 .sentence {
   display: flex;
 }
