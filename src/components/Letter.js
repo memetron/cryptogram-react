@@ -28,6 +28,13 @@ const CryptogramLetter = forwardRef(({
         }
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === "Backspace") {
+            e.preventDefault();
+            setGuesses({ ...guesses, [letter]: "" });
+        }
+    }
+
     const handleFocus = () => {
         setCurrentIndex(index);
         setFocusedLetter(letter);
@@ -38,12 +45,6 @@ const CryptogramLetter = forwardRef(({
         setIsActiveFocus(false);
     };
 
-    const handleKeyDown = (e) => {
-        if (e.key === "Backspace") {
-            e.preventDefault();
-            setGuesses({ ...guesses, [letter]: "" });
-        }
-    }
 
     useEffect(() => {
         if (focusedLetter === letter) {

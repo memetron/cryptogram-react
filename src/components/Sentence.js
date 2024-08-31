@@ -9,9 +9,11 @@ const Sentence = ({
     const [focusedLetter, setFocusedLetter] = useState("");
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const [inputRefsArray] = useState(() =>
-        Array.from({ length: cipherText.length }, () => createRef())
-    );
+    const [inputRefsArray, setInputRefsArray] = useState([]);
+
+    useEffect(() => {
+        setInputRefsArray(Array.from({ length: cipherText.length }, () => createRef()));
+    }, [cipherText]);
 
 
     const focusNextLetter = (prevLetter) => {
@@ -25,7 +27,6 @@ const Sentence = ({
             }
         }
     };
-
 
     const letters = cipherText.split('').map((c, index) => (
         <Letter
@@ -43,9 +44,21 @@ const Sentence = ({
         />
     ));
 
+    let words = [[]];
+    letters.forEach(letter => {
+        if (letter.props.letter === " ") { // Access the letter prop correctly
+            words.push([]);
+        } else {
+            words[words.length - 1].push(letter); // Correctly refer to the last array
+        }
+    });
     return (
         <div className="sentence">
-            {letters}
+            {words.map((word, index) => (
+                <div key={index} className="word">
+                    {word}
+                </div>
+            ))}
         </div>
     );
 };

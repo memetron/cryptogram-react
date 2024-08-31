@@ -74,10 +74,15 @@
   margin: 0;
 
 }
+
 input {
   all: unset;
 }
 
+.word {
+  display: inline-flex;
+  margin-right: 5px;
+}
 .inputBox__input {
   color: transparent;
 }

@@ -2,6 +2,7 @@ import './App.css';
 import Sentence from "./components/Sentence";
 import { createContext, useEffect, useState } from "react";
 import { getQuote } from "./misc/Api";
+import VictoryModal from "./components/VictoryModal";
 
 export const UserContext = createContext(null);
 
@@ -10,6 +11,7 @@ function App() {
     const [cipherText, setCipherText] = useState("HELLO, WORLD!");
     const [plainText, setPlainText] = useState("");
     const [key, setKey] = useState({});
+    const [victoryModal, setVictoryModal] = useState(false);
 
     useEffect(() => {
         const initGuesses = () => {
@@ -24,30 +26,37 @@ function App() {
             let dict = {};
             let remainingChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
 
-            for (let i = remainingChars.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [remainingChars[i], remainingChars[j]] = [remainingChars[j], remainingChars[i]];
+            let validPermutation = false;
+            while (!validPermutation) {
+                remainingChars = shuffleArray([...remainingChars]);
+
+                dict = {};
+                validPermutation = true;
+                for (let i = 0; i < remainingChars.length; i++) {
+                    if (remainingChars[i] === "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[i]) {
+                        validPermutation = false;
+                        break;
+                    }
+                    dict["ABCDEFGHIJKLMNOPQRSTUVWXYZ"[i]] = remainingChars[i];
+                }
             }
 
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('').forEach((c, index) => {
-                if (remainingChars[index] === c) {
-                    for (let k = 0; k < remainingChars.length; k++) {
-                        if (remainingChars[k] !== c && remainingChars[k] !== "SWAPPED") {
-                            [remainingChars[index], remainingChars[k]] = [remainingChars[k], remainingChars[index]];
-                            remainingChars[k] = "SWAPPED"; // Mark as swapped to avoid duplicate swaps
-                            break;
-                        }
-                    }
-                }
-                dict[c] = remainingChars[index];
-            });
-
+            console.log(dict);
             setKey(dict);
+        };
+
+        const shuffleArray = (array) => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
         };
 
         const initQuote = async () => {
             try {
-                const quote = await getQuote(); // Fetch the quote
+                // const quote = await getQuote(); // Fetch the quote
+                const quote = {content: "This is a test quote to show dad the program not being stupid and not getting a quote"};
                 console.log("API Response:", quote);
                 if (quote && quote.content) { // Check if the quote object and content are defined
                     setPlainText(quote.content); // Set the plain text to the quote content
@@ -78,6 +87,7 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
+                <VictoryModal isOpen={victoryModal} setIsOpen={setVictoryModal}/>
                 <Sentence cipherText={cipherText} guesses={guesses} setGuesses={setGuesses} />
             </header>
         </div>
