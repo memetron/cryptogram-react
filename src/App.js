@@ -96,15 +96,17 @@ function App() {
     }, [plainText, key]);
 
     useEffect(() => {
-        let isSuccess = true;
-        Array.from(activeLetters).forEach(c => {
-            if (guesses[key[c]] !== c) {
-                isSuccess = false;
-            }
-        });
+        if (activeLetters.size > 0) {
+            let isSuccess = true;
+            Array.from(activeLetters).forEach(c => {
+                if (guesses[key[c]] !== c) {
+                    isSuccess = false;
+                }
+            });
 
-        console.log(isSuccess);
-        setVictoryModal(isSuccess);
+            console.log(isSuccess);
+            setVictoryModal(isSuccess);
+        }
     }, [guesses]);
 
     return (
