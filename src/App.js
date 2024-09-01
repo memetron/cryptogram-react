@@ -114,8 +114,13 @@ function App() {
     }, [guesses, activeLetters, key]);
 
     const hint = () => {
-
-    }
+        for (let letter of activeLetters) {
+            if (guesses[key[letter]] !== letter) {
+                setGuesses({ ...guesses, [key[letter]]: letter });
+                return;
+            }
+        }
+    };
 
     return (
         <div className="App">

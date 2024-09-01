@@ -1,3 +1,5 @@
+import {useState} from "react";
+
 const MenuBar = (
     {
         index,
@@ -7,6 +9,8 @@ const MenuBar = (
         hint
     }
 ) => {
+    const [navigationTarget, setNavigationTarget] = useState(index);
+
     const handleNext = () => {
         const newIndex = (index + 1) % maxIndex;
         setIndex(newIndex);
@@ -25,12 +29,24 @@ const MenuBar = (
         setIndex(newIndex);
         newGame(newIndex);
     };
+
     const handleHint = () => {
         hint();
     };
+
+    const handleChange = (e) => {
+        const val = Math.max(0, Math.min(e.target.value, maxIndex - 1));
+        setNavigationTarget(val);
+    }
+
+    const handleGo = () => {
+        setIndex(navigationTarget);
+        newGame(navigationTarget);
+    }
+
     return (
         <div className="menuBar">
-            <div className="menuBarItems">
+            <div className="menuBarItems menuBarText">
                 {"Current Puzzle : " + index}
             </div>
             <div className="menuButtons">
@@ -38,6 +54,10 @@ const MenuBar = (
                 <button className="menuBarButton" onClick={handlePrevious}>Previous</button>
                 <button className="menuBarButton" onClick={handleRandom}>Random</button>
                 <button className="menuBarButton" onClick={handleHint}>Hint</button>
+                <div className="navigationBox">
+                    <input type="number" max={maxIndex} value={navigationTarget} onChange={handleChange}/>
+                    <button className="menuBarButton" onClick={handleGo}>Go</button>
+                </div>
             </div>
         </div>
     );
