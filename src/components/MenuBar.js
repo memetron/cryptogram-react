@@ -15,7 +15,7 @@ const MenuBar = (
 
     const handlePrevious = () => {
         let newIndex = (index - 1) % maxIndex;
-        newIndex = newIndex>0?newIndex:maxIndex+newIndex;
+        newIndex = newIndex>=0?newIndex:maxIndex+newIndex;
         setIndex(newIndex);
         newGame(newIndex);
     };

@@ -8,12 +8,14 @@ const VictoryModal = (
         setIsOpen,
         newGame,
         index,
-        setIndex
+        setIndex,
+        maxIndex
     }
 ) => {
     const handlePress = () => {
-        newGame(index + 1);
-        setIndex(index + 1)
+        const newIndex = (index + 1) % maxIndex;
+        setIndex(newIndex);
+        newGame(newIndex);
     }
 
     return (
@@ -32,7 +34,7 @@ const VictoryModal = (
             </Modal.Body>
 
             <Modal.Footer>
-                <AwesomeButton type="primary" onPress={newGame}>New Game</AwesomeButton>
+                <AwesomeButton type="primary" onPress={handlePress}>New Game</AwesomeButton>
             </Modal.Footer>
         </Modal>
     );
