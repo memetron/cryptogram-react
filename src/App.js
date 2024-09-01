@@ -17,6 +17,7 @@ function App() {
     const [quoteIndex, setQuoteIndex] = useState(0);
     const [maxIndex, setMaxIndex] = useState(0);
     const [author, setAuthor] = useState("");
+    const [focusedLetter, setFocusedLetter] = useState("");
 
     const newGame = (index) => {
         const initGuesses = () => {
@@ -117,6 +118,7 @@ function App() {
         for (let letter of activeLetters) {
             if (guesses[key[letter]] !== letter) {
                 setGuesses({ ...guesses, [key[letter]]: letter });
+                setFocusedLetter(key[letter]);
                 return;
             }
         }
@@ -129,7 +131,7 @@ function App() {
                 <p className="author">{author + " - "}</p>
                 <div>
                     <VictoryModal isOpen={victoryModal} setIsOpen={setVictoryModal} newGame={newGame} index={quoteIndex} setIndex={setQuoteIndex} maxIndex={maxIndex}/>
-                    <Sentence cipherText={cipherText} guesses={guesses} setGuesses={setGuesses}/>
+                    <Sentence cipherText={cipherText} guesses={guesses} setGuesses={setGuesses} focusedLetter={focusedLetter} setFocusedLetter={setFocusedLetter}/>
                 </div>
             </div>
 

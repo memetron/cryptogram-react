@@ -4,11 +4,11 @@ import {createRef, useEffect, useState} from "react";
 const Sentence = ({
                       guesses,
                       setGuesses,
-                      cipherText
+                      cipherText,
+    focusedLetter,
+    setFocusedLetter
                   }) => {
-    const [focusedLetter, setFocusedLetter] = useState("");
     const [currentIndex, setCurrentIndex] = useState(0);
-
     const [inputRefsArray, setInputRefsArray] = useState([]);
 
     useEffect(() => {

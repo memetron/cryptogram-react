@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const MenuBar = (
     {
@@ -35,14 +35,24 @@ const MenuBar = (
     };
 
     const handleChange = (e) => {
-        const val = Math.max(0, Math.min(e.target.value, maxIndex - 1));
-        setNavigationTarget(val);
+        if (e.target.value.match("^[0-9]*$")) {
+            if (e.target.value === "") {
+                setNavigationTarget("");
+            } else {
+                const val = Math.max(0, Math.min(e.target.value, maxIndex - 1));
+                setNavigationTarget(val);
+            }
+        }
     }
 
     const handleGo = () => {
-        setIndex(navigationTarget);
-        newGame(navigationTarget);
+        const newIndex = navigationTarget===""?0:navigationTarget;
+        setIndex(newIndex);
+        newGame(newIndex);
     }
+    useEffect(() => {
+        setNavigationTarget(index);
+    }, [index]);
 
     return (
         <div className="menuBar">
@@ -55,7 +65,7 @@ const MenuBar = (
                 <button className="menuBarButton" onClick={handleRandom}>Random</button>
                 <button className="menuBarButton" onClick={handleHint}>Hint</button>
                 <div className="navigationBox">
-                    <input type="number" max={maxIndex} value={navigationTarget} onChange={handleChange}/>
+                    <input type="text" max={maxIndex} value={navigationTarget} onChange={handleChange}/>
                     <button className="menuBarButton" onClick={handleGo}>Go</button>
                 </div>
             </div>
