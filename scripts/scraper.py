@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+print("author,quote")
 for page in range(1, 11):
     url = "https://www.azquotes.com/top_quotes.html?p="+str(page)
     response = requests.get(url)
