@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  padding: 5%;
 }
 
 .App-logo {
@@ -67,13 +67,27 @@
   caret-color: transparent;
 }
 
+.author {
+  text-align: left;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.game {
+  display: block;
+  gap: 10px;
+
+  width: 100%;
+  height: auto;
+}
+
 .sentence {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   justify-content: flex-start;
 
-  width: 75%;
+  width: 90%;
   height: auto;
 }
 .letterBox {
