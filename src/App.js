@@ -12,8 +12,9 @@ function App() {
     const [plainText, setPlainText] = useState("");
     const [key, setKey] = useState({});
     const [victoryModal, setVictoryModal] = useState(false);
+    const [activeLetters, setActiveLetters] = useState(new Set());
 
-    useEffect(() => {
+    const newGame = () => {
         const initGuesses = () => {
             let dict = {};
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('').forEach(c => {
@@ -41,7 +42,6 @@ function App() {
                 }
             }
 
-            console.log(dict);
             setKey(dict);
         };
 
@@ -71,9 +71,20 @@ function App() {
         initGuesses();
         initKey();
         initQuote();
+    }
+
+    useEffect(() => {
+        newGame();
     }, []);
 
     useEffect(() => {
+        let letters = new Set();
+        plainText.toUpperCase().split("").forEach(c => {
+        if (c.match("[A-Z]")) {
+            letters.add(c);
+        }
+        });
+        setActiveLetters(letters);
         if (plainText && Object.keys(key).length > 0) {
             let str = plainText.toLowerCase(); // Correctly call toLowerCase() as a function
             Object.keys(key).forEach(c => {
@@ -84,10 +95,22 @@ function App() {
         }
     }, [plainText, key]);
 
+    useEffect(() => {
+        let isSuccess = true;
+        Array.from(activeLetters).forEach(c => {
+            if (guesses[key[c]] !== c) {
+                isSuccess = false;
+            }
+        });
+
+        console.log(isSuccess);
+        setVictoryModal(isSuccess);
+    }, [guesses]);
+
     return (
         <div className="App">
             <header className="App-header">
-                <VictoryModal isOpen={victoryModal} setIsOpen={setVictoryModal}/>
+                <VictoryModal isOpen={victoryModal} setIsOpen={setVictoryModal} newGame={newGame}/>
                 <Sentence cipherText={cipherText} guesses={guesses} setGuesses={setGuesses} />
             </header>
         </div>
