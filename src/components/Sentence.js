@@ -52,8 +52,10 @@ const Sentence = ({
             words[words.length - 1].push(letter); // Correctly refer to the last array
         }
     });
+
     return (
         <div className="sentence">
+            <p className="cipherLetter">{"\t"}</p>
             {words.map((word, index) => (
                 <div key={index} className="word">
                     {word}

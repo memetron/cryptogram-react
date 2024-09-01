@@ -4,6 +4,7 @@ import {createContext, useEffect, useState} from "react";
 import * as Papa from 'papaparse';
 import VictoryModal from "./components/VictoryModal";
 import MenuBar from "./components/MenuBar";
+import useTimer from "./misc/Timer";
 
 export const UserContext = createContext(null);
 
@@ -18,6 +19,8 @@ function App() {
     const [maxIndex, setMaxIndex] = useState(0);
     const [author, setAuthor] = useState("");
     const [focusedLetter, setFocusedLetter] = useState("");
+    const [startTime, setStartTime] = useState(new Date())
+    const {minutes, seconds} = useTimer(startTime);
 
     const newGame = (index) => {
         const initGuesses = () => {
@@ -76,6 +79,7 @@ function App() {
         initGuesses();
         initKey();
         initQuote(index);
+        setStartTime(new Date())
     }
 
     useEffect(() => {
@@ -126,11 +130,12 @@ function App() {
 
     return (
         <div className="App">
-            <MenuBar index={quoteIndex} setIndex={setQuoteIndex} maxIndex={maxIndex} newGame={newGame} hint={hint}/>
+            <MenuBar index={quoteIndex} setIndex={setQuoteIndex} maxIndex={maxIndex} newGame={newGame} hint={hint} seconds={seconds} minutes={minutes}/>
             <div className="game">
                 <p className="author">{author + " - "}</p>
                 <div>
-                    <VictoryModal isOpen={victoryModal} setIsOpen={setVictoryModal} newGame={newGame} index={quoteIndex} setIndex={setQuoteIndex} maxIndex={maxIndex}/>
+                    <VictoryModal isOpen={victoryModal} setIsOpen={setVictoryModal} newGame={newGame} index={quoteIndex}
+                                  setIndex={setQuoteIndex} maxIndex={maxIndex} seconds={seconds} minutes={minutes}/>
                     <Sentence cipherText={cipherText} guesses={guesses} setGuesses={setGuesses} focusedLetter={focusedLetter} setFocusedLetter={setFocusedLetter}/>
                 </div>
             </div>

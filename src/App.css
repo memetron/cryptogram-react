@@ -72,6 +72,29 @@
   font-weight: bold;
 }
 
+.logo {
+  position: absolute;
+  font-size: 24px;
+  font-weight: bold;
+  left:5%;
+  color: darkblue;
+}
+
+.timer {
+  position: absolute;
+  right: 5%;
+  width: 100px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #0d4a7f;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
 .menuBar {
   background: #187bd1;
   display: flex;
@@ -87,9 +110,11 @@
 }
 
 .navigationBox {
+  display: flex;
   background: #1e88e5;
   border-radius: 5px;
 }
+
 .menuButtons {
   display: flex;
   justify-content: center;
@@ -183,4 +208,54 @@ input {
 
 .major-focus {
   background: aqua;
+}
+
+.modal-header {
+  background-color: #187bd1;
+  color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 20px;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.modal-body {
+  background-color: #f9f9f9;
+  padding: 20px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.modal-footer {
+  background-color: #187bd1;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.awesome-button {
+  background-color: #008cba;
+  color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+
+.awesome-button:hover {
+  background-color: #005f5f; /* Darken button color on hover */
+  color: #ffffff;
+}
+
+hr {
+  margin: 0; /* Remove margin around the hr */
+  border: none;
+  border-top: 2px solid #ddd; /* Style the horizontal line */
 }

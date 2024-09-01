@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Modal from 'react-bootstrap/Modal';
 import {AwesomeButton} from "react-awesome-button";
 
@@ -9,14 +9,24 @@ const VictoryModal = (
         newGame,
         index,
         setIndex,
-        maxIndex
+        maxIndex,
+        seconds,
+        minutes
     }
 ) => {
+    const [victorySeconds, setVictorySeconds] = useState(seconds);
+    const [victoryMinutes, setVictoryMinutes] = useState(minutes);
+
     const handlePress = () => {
         const newIndex = (index + 1) % maxIndex;
         setIndex(newIndex);
         newGame(newIndex);
     }
+
+    useEffect(() => {
+        setVictorySeconds(seconds);
+        setVictoryMinutes(minutes);
+    }, [isOpen]);
 
     return (
         <Modal
@@ -25,16 +35,17 @@ const VictoryModal = (
             backdrop="static"
             keyboard={false}
         >
-            <Modal.Header>
-                <Modal.Title>You win!</Modal.Title>
+            <Modal.Header className="modal-header">
+                <Modal.Title className="modal-title">You win!</Modal.Title>
             </Modal.Header>
-            <hr/>
-            <Modal.Body>
-                <p>TODO : Make timer.</p>
+            <hr />
+            <Modal.Body className="modal-body">
+                <p>{"You solved the cryptogram in " + victoryMinutes + ":" + victorySeconds}</p>
             </Modal.Body>
-
-            <Modal.Footer>
-                <AwesomeButton type="primary" onPress={handlePress}>New Game</AwesomeButton>
+            <Modal.Footer className="modal-footer">
+                <AwesomeButton className="awesome-button" type="primary" onPress={handlePress}>
+                    New Game
+                </AwesomeButton>
             </Modal.Footer>
         </Modal>
     );
