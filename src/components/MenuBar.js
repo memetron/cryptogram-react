@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import useTimer from "../misc/Timer";
 
 const MenuBar = (
     {
@@ -6,7 +7,9 @@ const MenuBar = (
         setIndex,
         maxIndex,
         newGame,
-        hint
+        hint,
+        seconds,
+        minutes
     }
 ) => {
     const [navigationTarget, setNavigationTarget] = useState(index);
@@ -19,7 +22,7 @@ const MenuBar = (
 
     const handlePrevious = () => {
         let newIndex = (index - 1) % maxIndex;
-        newIndex = newIndex>=0?newIndex:maxIndex+newIndex;
+        newIndex = newIndex >= 0 ? newIndex : maxIndex + newIndex;
         setIndex(newIndex);
         newGame(newIndex);
     };
@@ -46,7 +49,7 @@ const MenuBar = (
     }
 
     const handleGo = () => {
-        const newIndex = navigationTarget===""?0:navigationTarget;
+        const newIndex = navigationTarget === "" ? 0 : navigationTarget;
         setIndex(newIndex);
         newGame(newIndex);
     }
@@ -56,18 +59,23 @@ const MenuBar = (
 
     return (
         <div className="menuBar">
-            <div className="menuBarItems menuBarText">
-                {"Current Puzzle : " + index}
-            </div>
+            <p className="logo">Cryptograms</p>
             <div className="menuButtons">
-                <button className="menuBarButton" onClick={handleNext}>Next</button>
-                <button className="menuBarButton" onClick={handlePrevious}>Previous</button>
-                <button className="menuBarButton" onClick={handleRandom}>Random</button>
-                <button className="menuBarButton" onClick={handleHint}>Hint</button>
-                <div className="navigationBox">
-                    <input type="text" max={maxIndex} value={navigationTarget} onChange={handleChange}/>
+                <div className="navigationBox" style={{marginRight: "25px"}}>
+                    <p>Puzzle Number : </p>
+                    <input type="text" max={maxIndex} value={navigationTarget} onChange={handleChange}
+                           style={{width: "50px", marginLeft: "10px"}}/>
                     <button className="menuBarButton" onClick={handleGo}>Go</button>
                 </div>
+                <div className="navigationBox menuButtons" style={{marginRight: "25px"}}>
+                    <button className="menuBarButton" onClick={handleNext}>Next</button>
+                    <button className="menuBarButton" onClick={handlePrevious}>Previous</button>
+                    <button className="menuBarButton" onClick={handleRandom}>Random
+                    </button>
+                </div>
+                <button className="menuBarButton" onClick={handleHint}>Hint</button>
+
+                <div className="timer navigationBox"><p>{minutes+" : "+seconds}</p></div>
             </div>
         </div>
     );
