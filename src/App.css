@@ -1,5 +1,4 @@
 .App {
-  padding: 5%;
 }
 
 .App-logo {
@@ -73,7 +72,40 @@
   font-weight: bold;
 }
 
+.menuBar {
+  background: #187bd1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.menuBarItems {
+  margin-right: 20px; /* Optional: adds space between the text and the buttons */
+}
+
+.menuButtons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.menuBarButton {
+  border: 2px solid #0d4a7f;
+  padding: 10px 15px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.menuBarButton:hover {
+  background-color: #0056b3;
+}
+
 .game {
+  padding:5%;
   display: block;
   gap: 10px;
 

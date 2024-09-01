@@ -3,6 +3,7 @@ import Sentence from "./components/Sentence";
 import {createContext, useEffect, useState} from "react";
 import * as Papa from 'papaparse';
 import VictoryModal from "./components/VictoryModal";
+import MenuBar from "./components/MenuBar";
 
 export const UserContext = createContext(null);
 
@@ -14,9 +15,10 @@ function App() {
     const [victoryModal, setVictoryModal] = useState(false);
     const [activeLetters, setActiveLetters] = useState(new Set());
     const [quoteIndex, setQuoteIndex] = useState(0);
+    const [maxIndex, setMaxIndex] = useState(0);
     const [author, setAuthor] = useState("");
 
-    const newGame = () => {
+    const newGame = (index) => {
         const initGuesses = () => {
             let dict = {};
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('').forEach(c => {
@@ -64,20 +66,19 @@ function App() {
         };
 
         const initQuote = async (index) => {
-            console.log("index = " + index);
             const csv = await loadCsv();
+            setMaxIndex(csv.length);
             setPlainText(csv[index].quote);
             setAuthor(csv[index].author)
-            setQuoteIndex((quoteIndex + 1) % csv.length);
         };
 
         initGuesses();
         initKey();
-        initQuote(quoteIndex);
+        initQuote(index);
     }
 
     useEffect(() => {
-        newGame();
+        newGame(0);
     }, []);
 
     useEffect(() => {
@@ -112,12 +113,17 @@ function App() {
         }
     }, [guesses, activeLetters, key]);
 
+    const hint = () => {
+
+    }
+
     return (
         <div className="App">
+            <MenuBar index={quoteIndex} setIndex={setQuoteIndex} maxIndex={maxIndex} newGame={newGame} hint={hint}/>
             <div className="game">
                 <p className="author">{author + " - "}</p>
                 <div>
-                    <VictoryModal isOpen={victoryModal} setIsOpen={setVictoryModal} newGame={newGame}/>
+                    <VictoryModal isOpen={victoryModal} setIsOpen={setVictoryModal} newGame={newGame} index={quoteIndex} setIndex={setQuoteIndex} maxIndex={maxIndex}/>
                     <Sentence cipherText={cipherText} guesses={guesses} setGuesses={setGuesses}/>
                 </div>
             </div>

@@ -6,9 +6,16 @@ const VictoryModal = (
     {
         isOpen,
         setIsOpen,
-        newGame
+        newGame,
+        index,
+        setIndex
     }
 ) => {
+    const handlePress = () => {
+        newGame(index + 1);
+        setIndex(index + 1)
+    }
+
     return (
         <Modal
             show={isOpen}
