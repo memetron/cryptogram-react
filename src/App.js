@@ -5,6 +5,7 @@ import * as Papa from 'papaparse';
 import VictoryModal from "./components/VictoryModal";
 import MenuBar from "./components/MenuBar";
 import useTimer from "./misc/Timer";
+import Cookies from 'js-cookie';  // Import js-cookie
 
 export const UserContext = createContext(null);
 
@@ -23,6 +24,8 @@ function App() {
     const {minutes, seconds} = useTimer(startTime);
     const [displaySeconds, setDisplaySeconds] = useState("00");
     const [displayMinutes, setDisplayMinutes] = useState("00");
+
+    const COOKIE_NAME = 'quoteIndex';
 
     const newGame = (index) => {
         const initGuesses = () => {
@@ -82,11 +85,18 @@ function App() {
         initGuesses();
         initQuote(index);
         initKey();
-        setStartTime(new Date())
+        setStartTime(new Date());
+        Cookies.set(COOKIE_NAME, index, { expires: 7 });
     }
 
     useEffect(() => {
-        newGame(0);
+        const savedIndex = Cookies.get(COOKIE_NAME);
+        if (savedIndex !== undefined) {
+            setQuoteIndex(parseInt(savedIndex, 10));
+            newGame(parseInt(savedIndex, 10));
+        } else {
+            newGame(0);
+        }
     }, []);
 
     useEffect(() => {
