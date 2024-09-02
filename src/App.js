@@ -13,7 +13,7 @@ function App() {
     const [cipherText, setCipherText] = useState("HELLO, WORLD!");
     const [plainText, setPlainText] = useState("");
     const [key, setKey] = useState({});
-    const [victoryModal, setVictoryModal] = useState(false);
+    const [victory, setVictory] = useState(false);
     const [activeLetters, setActiveLetters] = useState(new Set());
     const [quoteIndex, setQuoteIndex] = useState(0);
     const [maxIndex, setMaxIndex] = useState(0);
@@ -21,6 +21,8 @@ function App() {
     const [focusedLetter, setFocusedLetter] = useState("");
     const [startTime, setStartTime] = useState(new Date())
     const {minutes, seconds} = useTimer(startTime);
+    const [displaySeconds, setDisplaySeconds] = useState("00");
+    const [displayMinutes, setDisplayMinutes] = useState("00");
 
     const newGame = (index) => {
         const initGuesses = () => {
@@ -115,9 +117,17 @@ function App() {
             });
 
             console.log(isSuccess);
-            setVictoryModal(isSuccess);
+            setVictory(isSuccess);
         }
     }, [guesses, activeLetters, key]);
+
+
+    useEffect(() => {
+        if (!victory) {
+            setDisplaySeconds(seconds.toString().padStart(2, '0'));
+            setDisplayMinutes(minutes.toString().padStart(2, '0'));
+        }
+    }, [seconds, minutes, victory]);
 
     const hint = () => {
         for (let letter of activeLetters) {
@@ -131,12 +141,12 @@ function App() {
 
     return (
         <div className="App">
-            <MenuBar index={quoteIndex} setIndex={setQuoteIndex} maxIndex={maxIndex} newGame={newGame} hint={hint} seconds={seconds} minutes={minutes}/>
+            <MenuBar index={quoteIndex} setIndex={setQuoteIndex} maxIndex={maxIndex} newGame={newGame} hint={hint} seconds={displaySeconds} minutes={displayMinutes}/>
             <div className="game">
                 <p className="author">{author + " - "}</p>
                 <div>
-                    <VictoryModal isOpen={victoryModal} setIsOpen={setVictoryModal} newGame={newGame} index={quoteIndex}
-                                  setIndex={setQuoteIndex} maxIndex={maxIndex} seconds={seconds} minutes={minutes}/>
+                    <VictoryModal isOpen={victory} setIsOpen={setVictory} newGame={newGame} index={quoteIndex}
+                                  setIndex={setQuoteIndex} maxIndex={maxIndex} seconds={displaySeconds} minutes={displayMinutes}/>
                     <Sentence cipherText={cipherText} guesses={guesses} setGuesses={setGuesses} focusedLetter={focusedLetter} setFocusedLetter={setFocusedLetter}/>
                 </div>
             </div>
