@@ -61,7 +61,7 @@ function App() {
         };
 
         const loadCsv = async function () {
-            const response = await fetch('./quotes.csv'); // Fetch the CSV file
+            const response = await fetch(`${process.env.PUBLIC_URL}/quotes.csv`); // Fetch the CSV file
             const csvText = await response.text(); // Convert the response to text
             return Papa.parse(csvText, {
                 header: true, // If your CSV has headers
@@ -71,14 +71,15 @@ function App() {
 
         const initQuote = async (index) => {
             const csv = await loadCsv();
+            console.log(csv);
             setMaxIndex(csv.length);
             setPlainText(csv[index].quote);
-            setAuthor(csv[index].author)
+            setAuthor(csv[index].author);
         };
 
         initGuesses();
-        initKey();
         initQuote(index);
+        initKey();
         setStartTime(new Date())
     }
 
