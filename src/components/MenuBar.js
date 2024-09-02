@@ -68,10 +68,9 @@ const MenuBar = (
                     <button className="menuBarButton" onClick={handleGo}>Go</button>
                 </div>
                 <div className="navigationBox menuButtons" style={{marginRight: "25px"}}>
-                    <button className="menuBarButton" onClick={handleNext}>Next</button>
                     <button className="menuBarButton" onClick={handlePrevious}>Previous</button>
-                    <button className="menuBarButton" onClick={handleRandom}>Random
-                    </button>
+                    <button className="menuBarButton" onClick={handleRandom}>Random</button>
+                    <button className="menuBarButton" onClick={handleNext}>Next</button>
                 </div>
                 <button className="menuBarButton" onClick={handleHint}>Hint</button>
 
